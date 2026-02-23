@@ -1,21 +1,61 @@
 '''
+В этом задании тебе нужно создать иерархию разных видов фильмов:
+драму и комедию, которые наследуются от суперкласса Movies.
 
+    1. Создай класс Movies:
+    2. проинициализируй в нём пустой список self.movies через конструктор;
+    3. добавь метод add_movie(). Он будет принимать параметр movie и
+       добавлять его в конец списка self.movies.
+    4. Создай два дочерних класса — Comedy и Drama. 
+       Они наследуют метод add_movie(). 
+       Метод этих классов должен принимать параметр movie и добавлять его
+       в конец списка self.movies.
+       Затем возвращать записи вида Комедии: '[]' и Драмы: '[]'
+       соответственно.
+    5. Вызови метод add_movie() для объекта Comedy(). 
+       Входной параметр — 'Большой куш'. Выведи на экран результат.
+    6. Вызови метод add_movie() для объекта Drama(). 
+       Входной параметр — 'Оружейный барон'. Выведи на экран результат.
+
+Подсказки
+
+    1. Чтобы добавить элемент в конец списка, нужен метод append(). 
+       То есть так: self.movies.append(movie).
+    2. Чтобы вернуть значение, используй return. 
+       Понадобится вернуть значение в определённом виде: 
+       return f'Комедии: {self.movies}'.
 
 '''
 
+class Movies:
+    def __init__(self, movies):
+        self.movies = movies
+    
+    def add_movie(self, movie):
+        self.movies.append(movie)
 
-class Tester:
+class Comedy(Movies):
+    pass
 
-    def __init__(self,name):
-        self.name = name
+    def __init__(self, movies):
+        super().__init__(movies)
+    
+    def add_movie(self, movie):
+        self.movies.append(movie)
+        return print(f"Комедии: {self.movies}")
+    
+class Drama(Movies):
+    def __init__(self, movies):
+        super().__init__(movies)
+    
+    def add_movie(self, movie):
+        self.movies.append(movie)
+        return print(f"Драма: {self.movies}")  
+    
+comedies = Comedy([])
 
-    def work_hard(self, deadline):
-        if deadline:
-            print(self.name, 'Что ж, ещё часок поработаю!')
-        else:
-            print(self.name, 'Можно отдыхать')
+comedies.add_movie('Большой куш')
 
-tester_1 = Tester(name='tester_1')
-tester_1.work_hard(deadline=False)  # 'tester_1 Можно отдыхать'
-tester_2 = Tester(name='tester_2')
-tester_2.work_hard(deadline=True)   # 'tester_2 Что ж, ещё часок поработаю!' 
+dramas = Drama([])
+
+dramas.add_movie('Оружейный барон')

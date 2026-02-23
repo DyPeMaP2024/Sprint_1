@@ -1,65 +1,106 @@
 '''
 
-Напиши класс TestCase. Он должен содержать конструктор и методы.
-В конструкторе инициализируются поля:
+Тебе нужно создать класс, который подсчитывает результаты состязаний 
+— Results. И двух его наследников — Football и Hockey. 
+Подклассы наследуют все атрибуты, а ещё у них есть свои методы.
 
-    steps — шаги тест-кейса, в качестве параметра принимает пустой словарь;
-    result — ожидаемый результат выполнения тест-кейса, принимает None в качестве параметра.
+  01. Напиши класс Results.
+      Проинициализируй в нём атрибуты
+      victories, draws, losses через конструктор.
 
-Методы:
+  02. Напиши класс Football, который наследуется от класса Results.
+      Его методы:
+      02.1 number_of_wins(),
+           который должен возвращать запись вида 'Футбольных побед: 1'
+           Количество побед должно браться из переменной victories.
+      02.2 number_of_draws(),
+           который должен возвращать запись вида 'Футбольных ничьих: 1'
+           Количество ничьих должно браться из переменной draws.
+      02.3 number_of_losses(),
+           который должен возвращать запись вида 'Футбольных поражений: 1'
+           Количество поражений возьми из переменной losses.
+      02.4 total_points(),
+           который должен возвращать запись вида 
+           'Общее количество очков: 5'
+           Количество очков рассчитай формуле:
+               3*количество побед + количество ничьих.
 
-    Метод set_step — добавляет в словарь steps шаг тест-кейса. Принимает два параметра: step_number и step_text. Ключ — это step_number(номер шага), а значение — step_text (текстовое описание шага).
-    Метод delete_step — удаляет шаг из steps по ключу step_number, который передали в метод.
-    Метод set_result — устанавливает ожидаемый результат. Он помещает его в атрибут result по параметру result, который передали методу.
-    Метод get_test_case — печатает информацию о составе тест-кейса в формате {'Шаги': {<номер шага>: '<описание шага>'}, 'Ожидаемый результат': '<вывод ожидаемого результата>'}.
+  03. Напиши класс Hockey, который наследуется от класса Results.
+      Его методы:
+      03.1 number_of_wins(),
+           который должен возвращать запись вида 'Хоккейных побед: 1'.
+           Количество побед метод берёт из переменной victories.
+      03.2 number_of_draws(), 
+           который должен возвращать запись вида 'Хоккейных ничьих: 1'.
+           Количество ничьих метод берёт из переменной draws.
+      03.3 number_of_losses(),
+           который должен возвращать запись вида 'Хоккейных поражений: 1'.
+           Количество поражений должно браться из переменной losses.
+      03.4 total_points(),
+           который должен возвращать запись вида 
+           'Общее количество очков: 5'. 
+           Количество очков рассчитывается по формуле:
+             2*количество побед + количество ничьих.
 
-Пример вывода метода get_test_case:
+  04. Создай объекты football_team и hockey_team 
+      классов Football и Hockey соответственно.
+      В качестве параметров передай (2, 2, 2).
 
-{
-    'Шаги': {
-            1: 'Перейти на сайт', 
-            2: 'Перейти в раздел Товары', 
-            3: 'Нажать кнопку «В корзину» у первого товара'
-    }, 
-    'Ожидаемый результат': 'Товар окажется в корзине'
-}
+  05. Вызови все методы для объектов football_team и hockey_team.
+      Используй цикл for. 
+      Названия методов при этом не должны повторяться для обоих объектов.
 
+Подсказки
+
+  Цикл for можно запустить сразу по двум элементам. 
+  Будет так: for team in (football_team, hockey_team). 
+  И дальше — действия.
+      
 '''
 
-class TestCase:
-    def __init__(self, steps=None, result=None):
-        self.steps = steps if steps is not None else {}
-        self.result = result
-
-    def set_step(self, step_number, step_text):
-        self.steps[step_number] = step_text
-
-    def delete_step(self, step_number):
-        del self.steps[step_number]
-
-    def set_result(self, result):
-        self.result = result
-
-    def get_test_case(self):
-        print({
-            'Шаги': self.steps,
-            'Ожидаемый результат': self.result
-        })
+class Results:
+    def __init__(self, victories, draws, losses):
+        self.victories = victories
+        self.draws = draws
+        self.losses = losses
 
 
-# Пример использования
-test_case_1 = TestCase()
-test_case_1.set_step(1, 'Перейти на сайт')
-test_case_1.set_step(3, 'Перейти в раздел Товары')
-test_case_1.delete_step(3)
-test_case_1.set_step(2, 'Перейти в раздел Товары')
-test_case_1.set_step(3, 'Нажать кнопку «В корзину» у первого товара')
-test_case_1.set_result('Товар окажется в корзине')
-test_case_1.get_test_case()
+class Football(Results):
+    def number_of_wins(self):
+        return f'Футбольных побед: {self.victories}'
 
-test_case_2 = TestCase()
-test_case_2.set_step(1, 'Перейти на сайт')
-test_case_2.set_step(2, 'Перейти в раздел Корзина')
-test_case_2.set_step(3, 'Нажать кнопку "Удалить"')
-test_case_2.set_result('Товар удален из корзины')
-test_case_2.get_test_case() 
+    def number_of_draws(self):
+        return f'Футбольных ничьих: {self.draws}'
+
+    def number_of_losses(self):
+        return f'Футбольных поражений: {self.losses}'
+
+    def total_points(self):
+        points = 3 * self.victories + self.draws
+        return f'Общее количество очков: {points}'
+
+
+class Hockey(Results):
+    def number_of_wins(self):
+        return f'Хоккейных побед: {self.victories}'
+
+    def number_of_draws(self):
+        return f'Хоккейных ничьих: {self.draws}'
+
+    def number_of_losses(self):
+        return f'Хоккейных поражений: {self.losses}'
+
+    def total_points(self):
+        points = 2 * self.victories + self.draws
+        return f'Общее количество очков: {points}'
+
+
+football_team = Football(2, 2, 2)
+hockey_team = Hockey(2, 2, 2)
+
+for team in (football_team, hockey_team):
+    print(team.number_of_wins())
+    print(team.number_of_draws())
+    print(team.number_of_losses())
+    print(team.total_points())
+
